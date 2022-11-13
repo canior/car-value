@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CarSold extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'vin',
         'year',
@@ -30,6 +33,13 @@ class CarSold extends Model
         'listing_status',
         'updated_at',
         'created_at',
+    ];
+
+
+    protected $casts = [
+        'first_seen_date' => 'datetime:Y-m-d',
+        'last_seen_date' => 'datetime:Y-m-d',
+        'dealer_vdp_last_seen_date' => 'datetime:Y-m-d',
     ];
 
     public function carModel(): BelongsTo

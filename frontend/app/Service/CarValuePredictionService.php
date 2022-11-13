@@ -3,20 +3,32 @@
 namespace App\Service;
 
 use App\Dtos\CarValuePredictionDto;
-use Illuminate\Http\Client\ConnectionException;
+use App\Models\CarMake;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CarValuePredictionService implements CarValuePredictionServiceInterface
 {
-    public function predict(CarValuePredictionDto $carValuePredictionDto): float
+    public function predict(CarValuePredictionDto $carValuePredictionDto): int
     {
-        $response = Http::retry(3, 100, function ($exception, $request) {
-            return $exception instanceof ConnectionException;
-        })->post('http://127.0.0.1:5000', [
-            'model_id' => 1,
-            'mileage' => 0,
-            'age' => 1
-        ]);
-        return $response->json();
+        try {
+            $carMake = CarMake::query()
+                ->where('name', 'like', '%' . $carValuePredictionDto->make . '%')
+                ->first();
+
+            $response = Http::post(getenv('CAR_PREDICTION_URL'), [
+                'model_id' => $carMake->id,
+                'mileage' => $carValuePredictionDto->mileage,
+                'age' => Carbon::now()->format('Y') - $carValuePredictionDto->year,
+            ]);
+
+            return intval($response->json());
+
+        } catch(\Exception $e) {
+            Log::info('Cannot connect to prediction service'. $e->getTraceAsString());
+            return 0;
+        }
+
     }
 }

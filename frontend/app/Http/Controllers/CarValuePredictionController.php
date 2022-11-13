@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Dtos\CarValuePredictionDto;
 use App\Http\Requests\CarValuePredictionRequest;
-use App\Http\Resources\CarMakeResource;
 use App\Http\Resources\CarSoldResource;
-use App\Models\CarMake;
-use App\Models\CarSold;
+use App\Service\CarSoldServiceInterface;
 use App\Service\CarValuePredictionServiceInterface;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -15,9 +13,12 @@ use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 class CarValuePredictionController extends Controller
 {
     private CarValuePredictionServiceInterface $carValuePredictionService;
+    private CarSoldServiceInterface $carSoldService;
 
-    public function __construct(CarValuePredictionServiceInterface $carValuePredictionService) {
+    public function __construct(CarValuePredictionServiceInterface $carValuePredictionService,
+                                CarSoldServiceInterface $carSoldService) {
         $this->carValuePredictionService = $carValuePredictionService;
+        $this->carSoldService = $carSoldService;
     }
 
     /**
@@ -34,7 +35,9 @@ class CarValuePredictionController extends Controller
 
         $prediction = $this->carValuePredictionService->predict($carValuePredictionDto);
 
-        return CarSoldResource::collection(CarSold::query()->select('*')->limit(5)->paginate(10))
-            ->additional(['prediction' => $prediction]);
+        return CarSoldResource::collection($this->carSoldService
+            ->listQuery($carValuePredictionDto)
+            ->paginate(100)
+        )->additional(['prediction' => '$' . number_format($prediction)]);
     }
 }

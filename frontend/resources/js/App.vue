@@ -31,17 +31,22 @@
             </div>
 
             <div class="alert alert-info" id="prediction_result" v-if="predictionValue != null">
-                <b>Prediction: {{ predictionValue }}</b>
+                <b>Market Value Prediction: {{ predictionValue }}</b>
             </div>
 
             <table id="prediction_data" v-if="predictionValue != null" class="table">
                 <thead>
-                <tr>
-                    <th>Vehicle</th>
-                    <th>Price</th>
-                    <th>Mileage</th>
-                    <th>Location</th>
-                </tr>
+                    <tr>
+                        <th colspan="4">
+                            Sample listings that were used to compute the market value
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Vehicle</th>
+                        <th>Price</th>
+                        <th>Mileage</th>
+                        <th>Location</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <tr v-for="car in cars" :key="car.id">

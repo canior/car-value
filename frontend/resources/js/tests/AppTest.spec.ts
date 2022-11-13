@@ -86,19 +86,25 @@ describe("App.vue", () => {
                     "id": 1,
                     "make": "Kia",
                     "model": "FORTE",
-                    "year": "2015"
+                    "year": "2015",
+                    "price": "$10,000",
+                    "mileage": "10,000 km",
                 },
                 {
                     "id": 2,
                     "make": "GMC",
                     "model": "Sierra 1500",
-                    "year": "2017"
+                    "year": "2017",
+                    "price": "$20,000",
+                    "mileage": "20,000 km",
                 },
                 {
                     "id": 3,
                     "make": "Dodge",
                     "model": "Ram Pickup 1500",
-                    "year": "1999"
+                    "year": "1999",
+                    "price": "$30,000",
+                    "mileage": "30,000 km",
                 },
             ],
             "prediction": prediction
@@ -120,6 +126,8 @@ describe("App.vue", () => {
             expect(wrapper.find('#prediction_data').text()).toContain(car.make);
             expect(wrapper.find('#prediction_data').text()).toContain(car.model);
             expect(wrapper.find('#prediction_data').text()).toContain(car.year.toString());
+            expect(wrapper.find('#prediction_data').text()).toContain(car.price.toString());
+            expect(wrapper.find('#prediction_data').text()).toContain(car.mileage.toString());
         }
 
         expect(wrapper.find('#prediction_result').text()).toContain(prediction);

@@ -6,5 +6,5 @@ use App\Dtos\CarValuePredictionDto;
 
 interface CarValuePredictionServiceInterface
 {
-    public function predict(CarValuePredictionDto $carValuePredictionDto): float;
+    public function predict(CarValuePredictionDto $carValuePredictionDto): int;
 }

@@ -32,7 +32,7 @@ return new class extends Migration
         Schema::create('car_models', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('car_make_id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->timestamps();
         });
 
@@ -42,21 +42,22 @@ return new class extends Migration
             $table->unsignedBigInteger('dealer_id');
             $table->string('vin');
             $table->string('year');
+            $table->string('trim')->nullable();
             $table->bigInteger('listing_price_in_cents');
             $table->bigInteger('listing_mileage')->nullable();
-            $table->boolean('used');
-            $table->boolean('certified');
-            $table->string('style');
-            $table->string('driven_wheels');
-            $table->string('engine');
+            $table->boolean('used')->nullable();
+            $table->boolean('certified')->nullable();
+            $table->string('style')->nullable();
+            $table->string('driven_wheels')->nullable();
+            $table->string('engine')->nullable();
             $table->string('fuel_type')->nullable();
-            $table->string('exterior_color');
-            $table->string('interior_color');
-            $table->string('seller_website');
-            $table->dateTime('first_seen_date')->nullable();
-            $table->dateTime('last_seen_date')->nullable();
-            $table->dateTime('dealer_vdp_last_seen_date')->nullable();
-            $table->string('listing_status');
+            $table->string('exterior_color')->nullable();
+            $table->string('interior_color')->nullable();
+            $table->string('seller_website')->nullable();
+            $table->timestamp('first_seen_date')->nullable();
+            $table->timestamp('last_seen_date')->nullable();
+            $table->timestamp('dealer_vdp_last_seen_date')->nullable();
+            $table->string('listing_status')->nullable();
             $table->timestamps();
 
             $table->foreign('car_model_id')->references('id')->on('car_models');
@@ -72,6 +73,9 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('dealers');
+        Schema::drop('car_makes');
+        Schema::drop('car_models');
+        Schema::drop('car_solds');
     }
 };
