@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/car/makes', [CarValuePredictionController::class, 'makes']);
-Route::get('/car/prediction', [CarValuePredictionController::class, 'index']);
 Route::post('/car/prediction', [CarValuePredictionController::class, 'predict']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

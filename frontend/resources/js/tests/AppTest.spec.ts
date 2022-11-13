@@ -1,39 +1,128 @@
-import { mount, shallowMount, flushPromises } from "@vue/test-utils";
-import App from "../../js/App.vue";
-import axios from 'axios';
+import { shallowMount } from "@vue/test-utils";
+import App from "../App.vue";
+import axios from "axios";
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+jest.mock("axios");
 
-const prediction = 1000;
-const cars = [
-    { "id": "1", "title": "book1", "subtitle": "hello1", "year": 1938},
-    { "id": "1", "title": "book1", "subtitle": "hello1", "year": 1938},
-    { "id": "1", "title": "book1", "subtitle": "hello1", "year": 1938}
-];
-const fakeResponse = Promise.resolve({"data": {"data": cars, "prediction": prediction}});
+describe("App.vue", () => {
+    it("correctly show empty predict form", async () => {
+        const wrapper = shallowMount(App, {} as any);
 
+        expect(wrapper.find('#year').text()).toBe("");
+        expect(wrapper.find('#make').text()).toBe("");
+        expect(wrapper.find('#model').text()).toBe("");
+        expect(wrapper.find('#mileage').text()).toBe("");
+        expect(wrapper.find('#prediction_btn').text()).toBe("Predict");
+        expect(wrapper.find('#prediction_result').exists()).toBe(false);
+        expect(wrapper.find('#prediction_data').exists()).toBe(false);
+    });
 
-describe("BookIndex.vue", () => {
+    it("correctly handle predict form validation", async () => {
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.post.mockResolvedValue({
+            data: [],
+        });
 
-    beforeEach(() => {
-    })
+        const wrapper = shallowMount(App, {} as any);
 
-    it("correctly predict with correct data", async () => {
+        await wrapper.find('#prediction_btn').trigger('click');
+        expect(wrapper.find('#errors').exists()).toBe(true);
 
-        mockedAxios.get.mockReturnValueOnce(fakeResponse);
+        await wrapper.find('#year').setValue(2022);
+        await wrapper.find('#prediction_btn').trigger('click');
+        expect(wrapper.find('#errors').exists()).toBe(true);
 
-        const wrapper = shallowMount(App, {
-            global: {
-                plugins: [],
+        await wrapper.find('#make').setValue('bmw');
+        await wrapper.find('#prediction_btn').trigger('click');
+        expect(wrapper.find('#errors').exists()).toBe(true);
+
+        await wrapper.find('#model').setValue('x5');
+        await wrapper.find('#prediction_btn').trigger('click');
+        expect(wrapper.find('#errors').exists()).toBe(false);
+    });
+
+    it("correctly handle server 422 error", async () => {
+        const serverError = 'Service validation error';
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.post.mockRejectedValue({
+            response: {
+                status: 422,
+                data: {
+                    message: serverError
+                }
             }
-        } as any);
+        });
 
-        expect(axios.post).toBeCalledWith("/api/car/prediction");
+        const wrapper = shallowMount(App, {} as any);
 
-        await flushPromises();
-        console.log(wrapper.vm);
-        expect(wrapper.vm.cars.length).toBe(3);
+        await wrapper.find('#year').setValue(1000);
+        await wrapper.find('#make').setValue('bmw');
+        await wrapper.find('#model').setValue('x5');
+        await wrapper.find('#prediction_btn').trigger('click');
+        expect(wrapper.find('#errors').exists()).toBe(true);
+        expect(wrapper.find('#errors').text()).toContain(serverError);
+    });
+
+    it("correctly handle server other errors", async () => {
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.post.mockRejectedValue({});
+
+        const wrapper = shallowMount(App, {} as any);
+
+        await wrapper.find('#year').setValue(1000);
+        await wrapper.find('#make').setValue('bmw');
+        await wrapper.find('#model').setValue('x5');
+        await wrapper.find('#prediction_btn').trigger('click');
+        expect(wrapper.find('#errors').exists()).toBe(true);
+        expect(wrapper.find('#errors').text()).toContain('Something wrong in server, please connect admin');
+    });
+
+
+    it("correctly get predict form result", async () => {
+        const prediction = '10000';
+        const cars = {
+            "data": [
+                {
+                    "id": 1,
+                    "make": "Kia",
+                    "model": "FORTE",
+                    "year": "2015"
+                },
+                {
+                    "id": 2,
+                    "make": "GMC",
+                    "model": "Sierra 1500",
+                    "year": "2017"
+                },
+                {
+                    "id": 3,
+                    "make": "Dodge",
+                    "model": "Ram Pickup 1500",
+                    "year": "1999"
+                },
+            ],
+            "prediction": prediction
+        };
+
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.post.mockResolvedValue({
+            data: cars,
+        });
+
+        const wrapper = shallowMount(App, {} as any);
+
+
+        await wrapper.find('#year').setValue(2022);
+        await wrapper.find('#make').setValue('bmw');
+        await wrapper.find('#model').setValue('x5');
+        await wrapper.find('#prediction_btn').trigger('click');
+        for (let car of cars.data) {
+            expect(wrapper.find('#prediction_data').text()).toContain(car.make);
+            expect(wrapper.find('#prediction_data').text()).toContain(car.model);
+            expect(wrapper.find('#prediction_data').text()).toContain(car.year.toString());
+        }
+
+        expect(wrapper.find('#prediction_result').text()).toContain(prediction);
     });
 
 });

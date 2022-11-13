@@ -20,6 +20,9 @@ class CarSoldResource extends JsonResource
             'make' => $this->carModel->carMake->name,
             'model' => $this->carModel->name,
             'year' => $this->year,
+            'mileage' => $this->listing_mileage,
+            'price' => $this->listing_price_in_cents / 100,
+            'location' => $this->dealer->city . ' ' . $this->dealer->state
         ];
     }
 }

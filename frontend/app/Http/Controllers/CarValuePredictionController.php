@@ -20,15 +20,6 @@ class CarValuePredictionController extends Controller
         $this->carValuePredictionService = $carValuePredictionService;
     }
 
-    public function index() {
-        echo "hi";
-    }
-
-    public function makes(): AnonymousResourceCollection
-    {
-        return CarMakeResource::collection(CarMake::all());
-    }
-
     /**
      * @throws UnknownProperties
      */
