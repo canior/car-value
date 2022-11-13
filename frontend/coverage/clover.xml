@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1668292660831" clover="3.2.0">
+  <project timestamp="1668292660831" name="All files">
+    <metrics statements="40" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="11" coveredmethods="0" elements="63" coveredelements="0" complexity="0" loc="40" ncloc="40" packages="1" files="3" classes="3"/>
+    <file name="App.vue" path="/Users/tandy/projects/car-value/frontend/resources/js/App.vue">
+      <metrics statements="35" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="11" coveredmethods="0"/>
+      <line num="3" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="17" count="0" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="24" count="0" type="stmt"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="26" count="0" type="stmt"/>
+      <line num="27" count="0" type="stmt"/>
+      <line num="28" count="0" type="stmt"/>
+      <line num="29" count="0" type="stmt"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="31" count="0" type="stmt"/>
+      <line num="32" count="0" type="stmt"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="34" count="0" type="stmt"/>
+      <line num="35" count="0" type="stmt"/>
+      <line num="36" count="0" type="stmt"/>
+      <line num="37" count="0" type="stmt"/>
+      <line num="38" count="0" type="stmt"/>
+      <line num="39" count="0" type="stmt"/>
+      <line num="43" count="0" type="stmt"/>
+      <line num="44" count="0" type="stmt"/>
+      <line num="52" count="0" type="stmt"/>
+      <line num="58" count="0" type="stmt"/>
+      <line num="59" count="0" type="stmt"/>
+      <line num="60" count="0" type="stmt"/>
+      <line num="62" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="100" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="116" count="0" type="stmt"/>
+      <line num="132" count="0" type="stmt"/>
+      <line num="133" count="0" type="stmt"/>
+    </file>
+    <file name="app.js" path="/Users/tandy/projects/car-value/frontend/resources/js/app.js">
+      <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="1" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+    </file>
+    <file name="bootstrap.js" path="/Users/tandy/projects/car-value/frontend/resources/js/bootstrap.js">
+      <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
