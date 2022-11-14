@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="209497d6-66d5-401c-978f-c84648ce72e6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/car_value_predict_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/car_value_predict_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/app/Http/Resources/CarMakeResource.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/app/Service/CarValuePredictionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app/Service/CarValuePredictionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/resources/js/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/car_value_predict_note.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/car_value_predict_note.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/.env.example" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,6 +196,8 @@
       <workItem from="1668265576337" duration="12048000" />
       <workItem from="1668408013663" duration="8325000" />
       <workItem from="1668418069055" duration="308000" />
+      <workItem from="1668441982231" duration="443000" />
+      <workItem from="1668444606919" duration="348000" />
     </task>
     <servers />
   </component>

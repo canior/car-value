@@ -90,10 +90,16 @@ export default {
             }
         },
 
+        resetData() {
+            this.cars = [];
+            this.predictionValue = null;
+        },
+
         submit() {
             this.checkValidPredictRequest();
 
             if (this.errors.length > 0) {
+                this.resetData();
                 return false;
             }
 
@@ -108,8 +114,10 @@ export default {
                         this.errors = [];
                         if (error.response && error.response.status && error.response.status === 422) {
                             this.errors.push(error.response.data.message);
+                            this.resetData();
                         } else {
                             this.errors.push('Something wrong in server, please connect admin');
+                            this.resetData();
                         }
                     }
                 )

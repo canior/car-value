@@ -1,8 +1,27 @@
-# main
+## Installation (Local)
+
+#### create config.ini
+- update database_connection for database connection
+
+#### install dependencies
+
+```
+pip3 install -r requirements.txt
+```
+
+#### start flask api
+
+```
 python3 main.py
+```
 
-# test
-python3 -m unittest tests/test_car_value_predict_controller.py -v 
+#### run unit tests
 
-# script
+```
+python3 -m unittest tests/test_car_value_predict_controller.py -v
+``` 
+
+#### script to train models
+```
 python3 scripts/car_value_predict.py
+```
