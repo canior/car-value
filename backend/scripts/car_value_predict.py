@@ -2,9 +2,17 @@ import pandas as pd
 import mysql.connector as connection
 import numpy as np
 import pickle
+import os
+import logging
 from sklearn.metrics import r2_score
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
+from configparser import ConfigParser
+
+
+configur = ConfigParser()
+configur.read(os.path.dirname(os.path.abspath(__file__)) + '/../config.ini')
+logging.basicConfig(filename=os.path.dirname(os.path.abspath(__file__)) + '/../log.txt', level=logging.INFO)
 
 
 def detect_outlier(raw_data):
@@ -50,18 +58,24 @@ def train_data(candidate_data):
                                n_jobs=-1)
     rf.fit(x_train, y_train)
     rf_test_pred = rf.predict(x_test)
-    print(row['name'] + '[' + str(row['id']) + ']: ' + str(r2_score(y_test, rf_test_pred)))
+    msg = row['name'] + '[' + str(row['id']) + ']: ' + str(r2_score(y_test, rf_test_pred))
+    logging.info(msg)
+    print(msg)
     return rf
 
 
 def create_model(file_id, data_model):
-    file = open('models/' + str(file_id) + '_model.pkl', 'wb')
+    file = open(os.path.dirname(os.path.abspath(__file__)) + '/../models/' + str(file_id) + '_model.pkl', 'wb')
     pickle.dump(data_model, file)
 
 
 connected = False
 try:
-    db = connection.connect(host="127.0.0.1", database='car', user="root", passwd="", use_pure=True)
+    db = connection.connect(host=configur.get('database_connection', 'host'),
+                            database=configur.get('database_connection', 'database'),
+                            user=configur.get('database_connection', 'user'),
+                            passwd=configur.get('database_connection', 'password'),
+                            use_pure=True)
     connected = True
 except Exception as e:
     print(str(e))
@@ -80,7 +94,5 @@ if connected:
         fd = clean_data(data)
         rf_model = train_data(fd)
         create_model(row['id'], rf_model)
-        m = pickle.load(open('models/' + str(row['id']) + '_model.pkl', 'rb'))
-
     cursor.close()
     db.close()

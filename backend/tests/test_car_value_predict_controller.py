@@ -1,9 +1,9 @@
-from app import app
+from api.car_value_predict_controller import app
 import unittest
 import json
 
 
-class AppTestCase(unittest.TestCase):
+class CarPredictControllerTestCase(unittest.TestCase):
 
     def test_prediction_successfully(self):
         tester = app.test_client(self)
