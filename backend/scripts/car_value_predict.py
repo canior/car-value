@@ -81,7 +81,7 @@ except Exception as e:
     print(str(e))
 if connected:
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select * from car_makes limit 3")
+    cursor.execute("select * from car_makes")
     results = cursor.fetchall()
 
     for row in results:
