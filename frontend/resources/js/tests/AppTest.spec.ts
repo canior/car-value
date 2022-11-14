@@ -79,7 +79,7 @@ describe("App.vue", () => {
 
 
     it("correctly get predict form result", async () => {
-        const prediction = '10000';
+        const prediction = '$10,000';
         const cars = {
             "data": [
                 {
@@ -130,7 +130,32 @@ describe("App.vue", () => {
             expect(wrapper.find('#prediction_data').text()).toContain(car.mileage.toString());
         }
 
+        expect(wrapper.find('#prediction_result').text()).toContain('Market Value Prediction: ' + prediction);
         expect(wrapper.find('#prediction_result').text()).toContain(prediction);
+    });
+
+
+    it("correctly get invalid predict form result", async () => {
+        const prediction = '$0';
+        const cars = {
+            "data": [],
+            "prediction": prediction
+        };
+
+        const mockedAxios = axios as jest.Mocked<typeof axios>;
+        mockedAxios.post.mockResolvedValue({
+            data: cars,
+        });
+
+        const wrapper = shallowMount(App, {} as any);
+
+
+        await wrapper.find('#year').setValue(2022);
+        await wrapper.find('#make').setValue('bmw');
+        await wrapper.find('#model').setValue('x5');
+        await wrapper.find('#prediction_btn').trigger('click');
+
+        expect(wrapper.find('#prediction_result').text()).toContain('Market Value Prediction Failed');
     });
 
 });

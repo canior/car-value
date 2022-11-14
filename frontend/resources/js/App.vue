@@ -30,12 +30,14 @@
                 </div>
             </div>
 
-            <div class="alert alert-info" id="prediction_result" v-if="predictionValue != null">
-                <b>Market Value Prediction: {{ predictionValue }}</b>
-            </div>
+            <div v-if="predictionValue !== null">
+                <div class="alert alert-info" id="prediction_result" >
+                    <b v-if="predictionValue !== '$0'">Market Value Prediction: {{ predictionValue }}</b>
+                    <b v-else>Market Value Prediction Failed</b>
+                </div>
 
-            <table id="prediction_data" v-if="predictionValue != null" class="table">
-                <thead>
+                <table id="prediction_data" v-if="predictionValue !== '$0'" class="table">
+                    <thead>
                     <tr>
                         <th colspan="4">
                             Sample listings that were used to compute the market value
@@ -47,16 +49,17 @@
                         <th>Mileage</th>
                         <th>Location</th>
                     </tr>
-                </thead>
-                <tbody>
-                <tr v-for="car in cars" :key="car.id">
-                    <td>{{ car.year }} {{ car.make }} {{ car.model }}</td>
-                    <td>{{ car.price }}</td>
-                    <td>{{ car.mileage }}</td>
-                    <td>{{ car.location }}</td>
-                </tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <tr v-for="car in cars" :key="car.id">
+                        <td>{{ car.year }} {{ car.make }} {{ car.model }}</td>
+                        <td>{{ car.price }}</td>
+                        <td>{{ car.mileage }}</td>
+                        <td>{{ car.location }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>
@@ -93,8 +96,10 @@ export default {
             if (this.errors.length > 0) {
                 return false;
             }
+
+            debugger;
             return axios
-                .post(`http://localhost:8000/api/car/prediction`, this.predictRequest)
+                .post(process.env.MIX_ENDPOINT_URL + `/api/car/prediction`, this.predictRequest)
                 .then((res) => {
                     this.predictionValue = res.data.prediction;
                     this.cars = res.data.data;

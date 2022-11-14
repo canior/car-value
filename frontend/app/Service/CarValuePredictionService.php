@@ -18,9 +18,9 @@ class CarValuePredictionService implements CarValuePredictionServiceInterface
                 ->first();
 
             $response = Http::post(getenv('CAR_PREDICTION_URL'), [
-                'model_id' => $carMake->id,
-                'mileage' => $carValuePredictionDto->mileage,
-                'age' => Carbon::now()->format('Y') - $carValuePredictionDto->year,
+                'make_id' => intval($carMake->id),
+                'mileage' => intval($carValuePredictionDto->mileage),
+                'age' => intval(Carbon::now()->format('Y') - $carValuePredictionDto->year),
             ]);
 
             return intval($response->json());

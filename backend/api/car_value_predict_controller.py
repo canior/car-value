@@ -27,6 +27,8 @@ def index():
     make_id = str(record['make_id'])
     mileage = int(record['mileage'])
     age = int(record['age'])
+    logging.info('Request: age=' + str(age) + ', make_id=' + make_id + ', mileage=' + str(mileage))
+
     try:
         with open('models/' + make_id + '_model.pkl', 'rb') as f:
             model = pickle.load(f)
