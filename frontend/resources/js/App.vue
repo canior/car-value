@@ -103,7 +103,6 @@ export default {
                 return false;
             }
 
-            debugger;
             return axios
                 .post(process.env.MIX_ENDPOINT_URL + `/api/car/prediction`, this.predictRequest)
                 .then((res) => {
