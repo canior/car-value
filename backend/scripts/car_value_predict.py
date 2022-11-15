@@ -93,7 +93,11 @@ if connected:
                 "where ma.name like '%' %(make)s '%'"
         data = pd.read_sql(query, db, params={'make': row['name']})
         fd = clean_data(data)
-        rf_model = train_data(fd)
-        create_model(row['id'], rf_model)
+        try:
+            rf_model = train_data(fd)
+            create_model(row['id'], rf_model)
+        except ValueError as e:
+            logging.info('not model created of make ' + row['name'])
+            continue
     cursor.close()
     db.close()
