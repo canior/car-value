@@ -17,7 +17,7 @@ class CarValuePredictionService implements CarValuePredictionServiceInterface
                 ->where('name', 'like', '%' . $carValuePredictionDto->make . '%')
                 ->first();
 
-            $response = Http::post(getenv('CAR_PREDICTION_URL'), [
+            $response = Http::post(env('CAR_PREDICTION_URL', 'http://127.0.0.1:5000'), [
                 'make_id' => intval($carMake->id),
                 'mileage' => intval($carValuePredictionDto->mileage),
                 'age' => intval(Carbon::now()->format('Y') - $carValuePredictionDto->year),
