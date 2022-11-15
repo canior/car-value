@@ -20,10 +20,11 @@ def detect_outlier(raw_data):
     threshold = 3
     mean = np.mean(raw_data)
     std = np.std(raw_data)
-    for i in raw_data:
-        z_score = (i - mean) / std
-        if np.abs(z_score) > threshold:
-            outlier.append(i)
+    if std != 0:
+        for i in raw_data:
+            z_score = (i - mean) / std
+            if np.abs(z_score) > threshold:
+                outlier.append(i)
     return outlier
 
 
