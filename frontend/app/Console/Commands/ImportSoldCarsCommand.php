@@ -82,7 +82,7 @@ class ImportSoldCarsCommand extends Command
                         $this->output->progressAdvance();
                         $result = $importSoldCarService->import($record);
                         if (!$result) {
-                            Log::info('invalid row: ' . json_encode($record) . ', exception: ' . $e->getMessage());
+                            Log::info('invalid row: ' . json_encode($record));
                         }
                     } catch (\Exception $e) {
                         Log::info('exception row: ' . json_encode($record) . ', exception: ' . $e->getMessage());
